@@ -9,7 +9,7 @@ using TECBoxAPI.Models;
 
 namespace TECBoxAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ClientsController : ControllerBase
     {
@@ -57,65 +57,58 @@ namespace TECBoxAPI.Controllers
         {
             "Santa Ana", "Puriscal", "Cartaguito", "Alajuela", "Sixaola"
         };
+        private static readonly string[] others = new[]
+        {
+            "Mi casa", "Lejos de aquí", "No sé", "fuiableuif", "Costa Rica"
+        };
         // GET: api/<ClientsController>
         [HttpGet]
-        public IEnumerable<Client> Get()
+        public IActionResult Get()
         {
-            return Enumerable.Range(0, ids.Length - 1).Select(index => new Client
-            {
-                id = ids[index],
-                name = names[index],
-                email = emails[index],
-                locker = lockers[index],
-                phone = phones[index],
-                cellphone = cellphones[index],
-                user = users[index],
-                password = passwords[index],
-                province = provinces[index],
-                state = states[index],
-                district = districts[index]
-            })
-            .ToArray();
-        }
+            Client[] response = new Client[5];
 
-        // GET api/<ClientsController>/5
-        [HttpGet("{id}")]
-        public IEnumerable<Client> Get(int id)
-        {
-            var i = id - 1;
-            return Enumerable.Range(i, i).Select(index => new Client
+            for (int i = 0; i < response.Length; i++)
             {
-                id = ids[index],
-                name = names[index],
-                email = emails[index],
-                locker = lockers[index],
-                phone = phones[index],
-                cellphone = cellphones[index],
-                user = users[index],
-                password = passwords[index],
-                province = provinces[index],
-                state = states[index],
-                district = districts[index]
-            })
-            .ToArray();
+                response[i] = new Client
+                {
+                    cedula = ids[i],
+                    nombre = names[i],
+                    correo = emails[i],
+                    casillero = lockers[i],
+                    celular = cellphones[i],
+                    habitacion = phones[i],
+                    usuario = users[i],
+                    pass = passwords[i],
+                    provincia = provinces[i],
+                    canton = states[i],
+                    distrito = districts[i],
+                    otras = others[i]
+                };
+            }
+
+
+            return Ok(new { result = 200, items = response });
         }
 
         // POST api/<ClientsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Client client)
         {
+            return Ok(new { result = "Worker " + client.cedula + " added." });
         }
 
         // PUT api/<ClientsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] UpdateClient value)
         {
+            return Ok(new { result = "Client with id " + value.cedula_old + " was updated with the client with id " + value.cedula_new });
         }
 
         // DELETE api/<ClientsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete(int id)
         {
+            return Ok(new { result = "Client with id " + id + " deleted." });
         }
     }
 }

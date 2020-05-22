@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace TECBoxAPI.Models
 {
-    public class Role
+    public class Salesman
     {
-        public object[] roles { get; set; }
+        public int cedula { get; set; }
+        public string nombre { get; set; }
     }
 }

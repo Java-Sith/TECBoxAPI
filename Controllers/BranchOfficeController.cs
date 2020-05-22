@@ -9,7 +9,7 @@ using TECBoxAPI.Models;
 
 namespace TECBoxAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class BranchOfficeController : ControllerBase
     {
@@ -35,42 +35,40 @@ namespace TECBoxAPI.Controllers
         };
         // GET: api/<BranchOfficeController>
         [HttpGet]
-        public IEnumerable<BranchOffice> Get()
+        public IActionResult Get()
         {
-            return Enumerable.Range(0, name.Length - 1).Select(index => new BranchOffice
+            var array =  Enumerable.Range(0, name.Length - 1).Select(index => new BranchOffice
             {
-                name = name[index],
-                province = province[index],
-                state = state[index],
-                district = district[index],
-                phone = phones[index]
+                nombre = name[index],
+                provincia = province[index],
+                canton = state[index],
+                distrito = district[index],
+                telefono = phones[index]
             })
             .ToArray();
-        }
 
-        // GET api/<BranchOfficeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            return Ok(new { result = "Äll workers.", items = array });
         }
 
         // POST api/<BranchOfficeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] BranchOffice value)
         {
+            return Ok(new { result = "BranchOffice with name " + value.nombre + " added." });
         }
 
         // PUT api/<BranchOfficeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] UpdateBranchOffice value)
         {
+            return Ok(new { result = "Branch office with name " + value.nombre_old + " was updated with the branch office with name " + value.nombre_new });
         }
 
         // DELETE api/<BranchOfficeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete([FromBody] string name)
         {
+            return Ok(new { result = "Branch office with name " + name + " deleted." });
         }
     }
 }

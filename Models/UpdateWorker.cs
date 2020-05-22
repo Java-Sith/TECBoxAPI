@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace TECBoxAPI.Models
 {
-    public class Worker
+    public class UpdateWorker
     {
-        public int Cedula { get; set; }
+        public int cedula_old { get; set; }
+        public int cedula_new { get; set; }
         public string nombre { get; set; }
         public string apellidos { get; set; }
         public string nacimiento { get; set; }

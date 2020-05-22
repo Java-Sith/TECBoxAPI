@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TECBoxAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TECBoxAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class WorkersController : ControllerBase
     {
@@ -35,7 +31,7 @@ namespace TECBoxAPI.Controllers
         };
         private static readonly string[] birthdate = new[]
         {
-            "12 de junio", "14 de febrero", "5 de enero", "5 de noviembre", "13 de abril"
+            "12 de junio del 1999", "14 de febrero del 1999", "5 de enero del 1999", "5 de noviembre del 1999", "13 de abril del 1999"
         };
         private static readonly string[] password = new[]
         {
@@ -43,49 +39,52 @@ namespace TECBoxAPI.Controllers
         };
         private static readonly string[] firstdate = new[]
         {
-            "12 de junio", "14 de febrero", "5 de enero", "5 de noviembre", "13 de abril"
+            "12 de junio del 20012", "14 de febrero del 2024", "5 de enero del 2020", "5 de noviembre del 2019", "13 de abril  del 2010"
         };
         // GET: api/<WorkersController>
         [HttpGet]
-        public IEnumerable<Worker> Get()
+        public IActionResult Get()
         {
-            return Enumerable.Range(0, id.Length - 1).Select(index => new Worker
-            {
-                id = id[index],
-                firstName = firstName[index],
-                lastName = lastName[index],
-                birthdate = birthdate[index],
-                firstdate = firstdate[index],
-                monthSalary = monthSalary[index],
-                hourSalary = hourSalary[index],
-                password = password[index]
-            })
-            .ToArray();
-        }
+            Worker[] response = new Worker[5];
 
-        // GET api/<WorkersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            for (int i = 0; i < response.Length; i++)
+            {
+                response[i] = new Worker
+                {
+                    Cedula = id[i],
+                    nacimiento = birthdate[i],
+                    ingreso = firstdate[i],
+                    nombre = firstName[i],
+                    salario_h = hourSalary[i],
+                    apellidos = lastName[i],
+                    salario_m = monthSalary[i],
+                    pass = password[i]
+                };
+            }
+
+
+            return Ok(new { result = 200, items = response });
         }
 
         // POST api/<WorkersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Worker values)
         {
+            return Ok(new { result = "Worker " + values.Cedula + " added." });
         }
 
         // PUT api/<WorkersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] UpdateWorker worker)
         {
+            return Ok(new { result = "Worker with id " + worker.cedula_old + " was updated with the worker with id " + worker.cedula_new });
         }
 
         // DELETE api/<WorkersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] int id)
         {
+            return Ok(new { result = "Worker with id " + id + " deleted." });
         }
     }
 }

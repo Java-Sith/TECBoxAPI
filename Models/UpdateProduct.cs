@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace TECBoxAPI.Models
 {
-    public class Products
+    public class UpdateProduct
     {
-        public int barcode { get; set; }
+        public int barcode_old { get; set; }
+        public int barcode_new { get; set; }
         public string nombre { get; set; }
         public string desc { get; set; }
         public int cant { get; set; }

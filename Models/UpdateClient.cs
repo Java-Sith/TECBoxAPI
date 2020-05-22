@@ -1,8 +1,14 @@
-﻿namespace TECBoxAPI.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace TECBoxAPI.Models
 {
-    public class Client
+    public class UpdateClient
     {
-        public int cedula { get; set; }
+        public int cedula_old { get; set; }
+        public int cedula_new { get; set; }
         public string nombre { get; set; }
         public string correo { get; set; }
         public int casillero { get; set; }

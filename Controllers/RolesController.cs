@@ -1,63 +1,81 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TECBoxAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TECBoxAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class RolesController : ControllerBase
     {
-        private static readonly string[] names = new[]
-        {
-            "Camilo", "Evaluna", "Jonathan", "Jaime", "Ricardo", "Valentine"
-        };
-        private static readonly string[] descriptions = new[]
-        {
-            "Administrador", "Repartidor", "Bodeguero"
-        };
         // GET: api/<RolesController>
         [HttpGet]
-        public IEnumerable<Role> Get()
+        public IActionResult Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(0, names.Length - 1).Select(index => new Role
+            string[] roles = new[]
             {
-                name = names[index],
-                description = descriptions[rng.Next(descriptions.Length)]
-            })
-            .ToArray();
-        }
+                "Administrador", "Repartidor", "Bodeguero"
+            };
 
-        // GET api/<RolesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            string[] desc = new[]
+            {
+                "Rol de admin", "Rol de repartidor", "Rol de bodeguero"
+            };
+
+            string[] union1 =
+            {
+                roles[0],
+                desc[0]
+            };
+
+            string[] union2 =
+            {
+                roles[1],
+                desc[1]
+            };
+
+            string[] union3 =
+            {
+                roles[2],
+                desc[2]
+            };
+
+            object[] r1 =
+            {
+                union1,
+                union2,
+                union3
+            };
+
+            string r = JsonConvert.SerializeObject(r1);
+
+            return Ok(new { result = r });
         }
 
         // POST api/<RolesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Role role)
         {
+            return Ok(role);
         }
 
         // PUT api/<RolesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] UpdateRole role)
         {
+            return Ok(new { result = "Roles updated." });
         }
 
         // DELETE api/<RolesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] Role role)
         {
+            string response = "Roles deleted.";
+
+            return Ok(new { result = response });
         }
     }
 }

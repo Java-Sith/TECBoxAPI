@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TECBoxAPI.Models
 {
-    public class Products
+    public class Sale
     {
         public int barcode { get; set; }
         public string nombre { get; set; }
@@ -14,5 +14,6 @@ namespace TECBoxAPI.Models
         public int precio { get; set; }
         public double impuesto { get; set; }
         public double descuento { get; set; }
+        public double vendidos { get; set; }
     }
 }
