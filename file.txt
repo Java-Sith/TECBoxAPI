@@ -1,0 +1,30 @@
+https localhost:44354/Roles  
+
+https localhost:44354/api/logging  
+
+GET localhost:44354/api/logging  
+
+GET /api/logging 
+
+HEAD / 
+
+HEAD / 
+
+GET /Roles 
+
+GET /Products 
+
+GET /api/logging 
+
+GET /Roles 
+
+GET /api/logging 
+
+GET /Roles 
+
+HEAD / 
+
+HEAD / 
+
+GET /favicon.ico 
+
